@@ -16,7 +16,7 @@
 
 ::-webkit-scrollbar-thumb {
     border-radius: 15px;
-    background: #ffffff;
+    background: #a8a8a8;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -235,6 +235,7 @@ body .stars4 {
 /* Default (centered) */
 .earth-section {
     display: flex;
+    justify-content: center;
     transition: all 2s ease;
     /* smooth */
 }
@@ -249,7 +250,6 @@ body .stars4 {
     transform: translateY(20px);
     /* slight upward movement for fade effect */
     transition: opacity 1s ease, transform 1s ease;
-    margin-top: 150px;
     /* fixed margin controlled by Earth */
 }
 
@@ -258,12 +258,6 @@ body .stars4 {
     opacity: 1;
     transform: translateY(0);
     /* fade in smoothly */
-    /* do NOT change margin-top here */
-}
-
-/* When scrolled */
-.earth-section.left-align {
-    justify-content: left;
 }
 
 #earthPNG {
@@ -273,11 +267,11 @@ body .stars4 {
 .earth-container {
     display: grid;
     grid-template-columns: auto auto;
-    gap: 200px;
+    gap: 100px;
     /* gap for both rows and columns */
-    column-gap: 200px;
+    column-gap: 100px;
     /* only horizontal */
-    row-gap: 200px;
+    row-gap: 100px;
     /* only vertical */
     position: relative;
 }
@@ -324,11 +318,6 @@ body .stars4 {
 .earth::after {
     content: '';
     position: absolute;
-    top: 15%;
-    left: 15%;
-    width: 35%;
-    height: 35%;
-    border-radius: 50%;
 }
 
 @keyframes earthRotate {
@@ -356,6 +345,10 @@ body .stars4 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 48px;
+}
+
+.newfont {
+    font-family: 'Space Mono', monospace;
 }
 
 .member-card {

@@ -32,7 +32,7 @@ function handleScroll() {
   // apply size
   earth.style.width = `${newSize}rem`;
   earth.style.height = `${newSize}rem`;
-  earth.style.marginTop = scrollY > 0 ? "100px" : "0px";
+  earth.style.marginTop = scrollY > 0 ? "0px" : "0px";
 
   // align left
   if (scrollY > 0) {
