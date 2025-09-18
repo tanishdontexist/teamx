@@ -1,0 +1,671 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.3);
+    background: rgb(43, 43, 43);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 15px;
+    background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #000000;
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Layer 1: Slow twinkling stars */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1px 1px at 200px 90px, #ffffff, transparent),
+        radial-gradient(1px 1px at 240px 50px, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(2px 2px at 280px 120px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 320px 40px, #ffffff, transparent),
+        radial-gradient(1px 1px at 360px 100px, rgba(255, 255, 255, 0.6), transparent);
+    background-repeat: repeat;
+    background-size: 1200px 450px;
+    animation: twinkleSlow 10s ease-in-out infinite alternate, drift 80s linear infinite;
+    z-index: -4;
+    pointer-events: none;
+}
+
+/* Layer 2: Medium twinkling stars */
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(1px 1px at 25px 45px, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1px 1px at 75px 25px, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(1px 1px at 135px 85px, #ffffff, transparent),
+        radial-gradient(2px 2px at 195px 55px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 255px 115px, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(2px 2px at 315px 65px, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1px 1px at 375px 135px, #ffffff, transparent),
+        radial-gradient(1px 1px at 435px 45px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(2px 2px at 495px 105px, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(1px 1px at 555px 75px, #ffffff, transparent);
+    background-repeat: repeat;
+    background-size: 1200px 450px;
+    animation: twinkleMedium 6s ease-in-out infinite alternate, float 60s ease-in-out infinite;
+    z-index: -3;
+    pointer-events: none;
+}
+
+/* Layer 3: Fast twinkling */
+body .stars3 {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(1px 1px at 60px 60px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 120px 120px, #ffffff, transparent),
+        radial-gradient(2px 2px at 180px 40px, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1px 1px at 240px 100px, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(1px 1px at 300px 160px, #ffffff, transparent),
+        radial-gradient(2px 2px at 360px 200px, rgba(255, 255, 255, 0.9), transparent);
+    background-repeat: repeat;
+    background-size: 1000px 400px;
+    animation: twinkleFast 3s ease-in-out infinite alternate, drift 50s linear infinite;
+    z-index: -2;
+    pointer-events: none;
+}
+
+/* Layer 4: Very fast twinkling (tiny stars/dust) */
+body .stars4 {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(1px 1px at 30px 30px, rgba(255, 255, 255, 0.5), transparent),
+        radial-gradient(1px 1px at 90px 90px, rgba(255, 255, 255, 0.4), transparent),
+        radial-gradient(1px 1px at 150px 60px, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(1px 1px at 210px 120px, rgba(255, 255, 255, 0.6), transparent);
+    background-repeat: repeat;
+    background-size: 800px 300px;
+    animation: twinkleVeryFast 1.5s ease-in-out infinite alternate, float 30s ease-in-out infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Animations */
+@keyframes twinkleSlow {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+@keyframes twinkleMedium {
+
+    0%,
+    100% {
+        opacity: 0.9;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+@keyframes twinkleFast {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0.5;
+    }
+
+    75% {
+        opacity: 0.2;
+    }
+}
+
+@keyframes twinkleVeryFast {
+
+    0%,
+    100% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 0.1;
+    }
+}
+
+@keyframes drift {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+
+    50% {
+        transform: translateX(15px) translateY(-10px);
+    }
+
+    100% {
+        transform: translateX(0) translateY(0);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px) translateX(0px);
+    }
+
+    50% {
+        transform: translateY(-20px) translateX(10px);
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Header Section */
+.header {
+    padding: 120px 0 80px;
+    text-align: center;
+}
+
+.header h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 4px;
+}
+
+.bio {
+    font-size: 1.25rem;
+    color: #a3a3a3;
+    margin: 0 auto;
+    font-weight: 400;
+}
+
+/* Default (centered) */
+.earth-section {
+    display: flex;
+    transition: all 2s ease;
+    /* smooth */
+}
+
+.margin-topp {
+    margin-top: 300px;
+}
+
+/* Hidden by default */
+.hidden-default {
+    opacity: 0;
+    transform: translateY(20px);
+    /* slight upward movement for fade effect */
+    transition: opacity 1s ease, transform 1s ease;
+    margin-top: 150px;
+    /* fixed margin controlled by Earth */
+}
+
+/* When class is added */
+.unhide-default {
+    opacity: 1;
+    transform: translateY(0);
+    /* fade in smoothly */
+    /* do NOT change margin-top here */
+}
+
+/* When scrolled */
+.earth-section.left-align {
+    justify-content: left;
+}
+
+#earthPNG {
+    transition: margin-top 0.6s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.earth-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 200px;
+    /* gap for both rows and columns */
+    column-gap: 200px;
+    /* only horizontal */
+    row-gap: 200px;
+    /* only vertical */
+    position: relative;
+}
+
+.bio-width {
+    margin-right: 50px;
+}
+
+.earth {
+    width: 120rem;
+    height: 120rem;
+    position: relative;
+    transform: rotate(90deg);
+    overflow: hidden;
+    animation: earthRotate 720s linear infinite;
+}
+
+/* Static Earth for Mobile */
+@media (max-width: 991px) {
+    .earth {
+        display: none;
+    }
+
+    .bio-width {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    .earth-container {
+        grid-template-columns: auto;
+    }
+}
+
+/* Realistic Earth continents overlay */
+.earth::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("/media/earth.png") center/cover;
+}
+
+/* Earth highlight */
+.earth::after {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 35%;
+    height: 35%;
+    border-radius: 50%;
+}
+
+@keyframes earthRotate {
+    0% {
+        transform: rotate(90deg);
+    }
+
+    100% {
+        transform: rotate(-90deg);
+    }
+}
+
+.section-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 80px;
+    letter-spacing: 2px;
+}
+
+/* Team Section */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 48px;
+}
+
+.member-card {
+    text-decoration: none;
+    background: #262626;
+    border: 1px solid #404040;
+    border-radius: 8px;
+    padding: 48px 32px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.member-card:hover {
+    background: #2d2d2d;
+    border-color: #525252;
+    transform: translateY(-4px);
+}
+
+.member-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    /* makes it circular */
+    background: linear-gradient(135deg, #525252, #737373);
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* ensures image doesn't spill outside circle */
+}
+
+.member-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* fills circle without stretching */
+    display: block;
+}
+
+.member-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.member-role {
+    color: #a3a3a3;
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.member-bio {
+    color: #d4d4d4;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Projects Section */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 48px;
+}
+
+.project-card {
+    text-decoration: none;
+    background: #262626;
+    border: 1px solid #404040;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    background: #2d2d2d;
+    border-color: #525252;
+    transform: translateY(-4px);
+}
+
+.project-header {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    /* keeps 16:9 ratio */
+    background: linear-gradient(135deg, #404040, #525252);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #ffffff;
+    overflow: hidden;
+    /* hide overflow if image is bigger */
+}
+
+.project-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* fills container without stretching */
+    display: block;
+}
+
+.project-content {
+    padding: 40px 32px;
+}
+
+.project-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+.project-description {
+    color: #d4d4d4;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    font-size: 1rem;
+}
+
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.tech-tag {
+    background: #404040;
+    color: #ffffff;
+    padding: 6px 16px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: 'Space Mono', monospace;
+}
+
+.margin-top {
+    margin-top: 100px;
+}
+
+/* Footer */
+.footer {
+    margin-top: 100px;
+    background: #0f0f0f;
+    border-top: 1px solid #333333;
+    padding: 80px 0 40px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 48px;
+    margin-bottom: 48px;
+}
+
+.footer-section h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.footer-section p,
+.footer-section a {
+    color: #a3a3a3;
+    text-decoration: none;
+    line-height: 1.8;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.footer-section a:hover {
+    color: #ffffff;
+}
+
+.footer-bottom {
+    border-top: 1px solid #333333;
+    padding-top: 32px;
+    text-align: center;
+    color: #737373;
+    font-size: 0.9rem;
+}
+
+/* Navbar */
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    transition: background 0.3s ease, padding 0.3s ease;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+}
+
+.navbar .logo {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 32px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #bbbbbb;
+    font-weight: 300;
+    font-family: 'Inter', sans-serif;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-links li a:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 991px) {
+    .navbar {
+        background: #000000;
+        /* Solid black background on mobile */
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        /* Hidden offscreen */
+        width: 75%;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: center;
+        background: #000000;
+        transition: left 0.3s ease;
+        z-index: 2000;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-links li {
+        margin: 15px 0;
+        width: auto;
+        margin-left: 20px;
+    }
+
+    .nav-links.open {
+        left: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: #ffffff;
+        z-index: 2100;
+        position: relative;
+    }
+}
+
+/* Optional Hamburger for mobile */
+.menu-toggle {
+    display: none;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+    .header h1 {
+        font-size: 3rem;
+        letter-spacing: 2px;
+    }
+
+    .earth {
+        width: 220px;
+        height: 220px;
+    }
+
+    .projects-grid,
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 60px;
+    }
+
+    /* Optional Hamburger for mobile */
+    .menu-toggle {
+        display: block;
+    }
+}

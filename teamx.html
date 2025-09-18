@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team X</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Full scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: white;
+            border-radius: 0;
+            border: none;
+        }
+
+        ::-webkit-scrollbar-button:increment,
+        ::-webkit-scrollbar-button:decrement {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: white transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Fixed Header for Logo */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: all 0.3s ease;
+        }
+
+        .fixed-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 2px;
+        }
+
+        .earth-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #4a90e2, #2c5282, #1a365d);
+            position: relative;
+            overflow: hidden;
+            animation: earthRotate 60s linear infinite;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.5s ease;
+        }
+
+        .earth-logo.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .earth-logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpattern id='continents' patternUnits='userSpaceOnUse' width='100' height='100'%3E%3Cpath d='M20,30 Q25,25 35,28 Q45,32 40,40 Q35,45 25,42 Q15,38 20,30 M60,20 Q70,18 75,25 Q80,35 70,38 Q60,40 55,30 Q58,22 60,20 M15,60 Q25,58 30,65 Q35,75 25,78 Q15,80 10,70 Q12,62 15,60 M70,55 Q80,53 85,60 Q90,70 80,73 Q70,75 65,65 Q68,57 70,55' fill='%23228B22'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23continents)'/%3E%3C/svg%3E") center/cover;
+            border-radius: 50%;
+        }
+
+        /* Header Section */
+        .header {
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 4px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .bio {
+            font-size: 1.25rem;
+            color: #a3a3a3;
+            margin: 40px auto 0;
+            font-weight: 400;
+        }
+
+        /* Earth Section */
+        .earth-section {
+            display: flex;
+            justify-content: center;
+            margin: 60px 0;
+            position: relative;
+        }
+
+        .earth-container {
+            position: relative;
+        }
+
+        .earth {
+            width: 150rem;
+            height: 150rem;
+            position: relative;
+            transform: rotate(90deg);
+            overflow: hidden;
+            animation: earthRotate 720s linear infinite;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #4a90e2, #2c5282, #1a365d);
+            transition: all 0.5s ease;
+        }
+
+        .earth::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cpattern id='continents-large' patternUnits='userSpaceOnUse' width='100' height='100'%3E%3Cpath d='M20,30 Q25,25 35,28 Q45,32 40,40 Q35,45 25,42 Q15,38 20,30 M60,20 Q70,18 75,25 Q80,35 70,38 Q60,40 55,30 Q58,22 60,20 M15,60 Q25,58 30,65 Q35,75 25,78 Q15,80 10,70 Q12,62 15,60 M70,55 Q80,53 85,60 Q90,70 80,73 Q70,75 65,65 Q68,57 70,55' fill='%23228B22'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23continents-large)'/%3E%3C/svg%3E") center/cover;
+            border-radius: 50%;
+        }
+
+        @keyframes earthRotate {
+            0% { transform: rotate(90deg); }
+            100% { transform: rotate(-90deg); }
+        }
+
+        /* Main Content */
+        .main-content {
+            background: #000000;
+            border-top: 1px solid #000000;
+            padding-top: 80px;
+        }
+
+        .section:not(:last-child) {
+            border-bottom: 1px solid #333333;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 80px;
+            letter-spacing: 2px;
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 48px;
+        }
+
+        .member-card {
+            background: #262626;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            padding: 48px 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .member-card:hover {
+            background: #2d2d2d;
+            border-color: #525252;
+            transform: translateY(-4px);
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #525252, #737373);
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .member-name {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .member-role {
+            color: #a3a3a3;
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .member-bio {
+            color: #d4d4d4;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 48px;
+        }
+
+        .project-card {
+            background: #262626;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            background: #2d2d2d;
+            border-color: #525252;
+            transform: translateY(-4px);
+        }
+
+        .project-header {
+            height: 160px;
+            background: linear-gradient(135deg, #404040, #525252);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #ffffff;
+        }
+
+        .project-content {
+            padding: 40px 32px;
+        }
+
+        .project-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+
+        .project-description {
+            color: #d4d4d4;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            font-size: 1rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .tech-tag {
+            background: #404040;
+            color: #ffffff;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f0f0f;
+            border-top: 1px solid #333333;
+            padding: 80px 0 40px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-section h4 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #a3a3a3;
+            text-decoration: none;
+            line-height: 1.8;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-section a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333333;
+            padding-top: 32px;
+            text-align: center;
+            color: #737373;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 3rem;
+                letter-spacing: 2px;
+            }
+
+            .earth {
+                width: 220px;
+                height: 220px;
+            }
+
+            .projects-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 60px;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+            }
+
+            .earth-logo {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Header with Logo -->
+    <div class="fixed-header" id="fixedHeader">
+        <div class="container">
+            <div class="logo-container">
+                <span class="logo-text">TEAM</span>
+                <div class="earth-logo" id="earthLogo"></div>
+                <span class="logo-text">X</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>TEAM X</h1>
+            <p class="bio">
+                We are a professional technology team focused on delivering innovative solutions and cutting-edge development services.
+                Our expertise spans across multiple domains to create scalable, efficient systems for modern enterprises.
+            </p>
+        </div>
+    </header>
+
+    <!-- Earth Section -->
+    <div class="earth-section">
+        <div class="earth-container">
+            <div class="earth" id="earthPNG"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Team Section -->
+            <section class="section">
+                <h2 class="section-title">UR TEAM</h2>
+                <div class="team-grid">
+                    <div class="member-card">
+                        <div class="member-avatar">AJ</div>
+                        <h3 class="member-name">Alex Johnson</h3>
+                        <p class="member-role">Senior Developer</p>
+                        <p class="member-bio">Full-stack engineer with extensive experience in scalable web applications and system architecture. Specializes in modern frameworks and cloud technologies for enterprise solutions.</p>
+                    </div>
+                    
+                    <div class="member-card">
+                        <div class="member-avatar">SC</div>
+                        <h3 class="member-name">Sarah Chen</h3>
+                        <p class="member-role">Lead Designer</p>
+                        <p class="member-bio">Product designer focused on user experience and interface design. Creates intuitive digital experiences that drive engagement and business growth through thoughtful design systems.</p>
+                    </div>
+                    
+                    <div class="member-card">
+                        <div class="member-avatar">MR</div>
+                        <h3 class="member-name">Mike Rodriguez</h3>
+                        <p class="member-role">Project Manager</p>
+                        <p class="member-bio">Experienced project manager specializing in agile methodologies and cross-functional team coordination. Ensures timely delivery while maintaining high quality standards.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section class="section">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-header">⚡</div>
+                        <div class="project-content">
+                            <h3 class="project-title">CloudSync Platform</h3>
+                            <p class="project-description">
+                                Enterprise-grade cloud synchronization platform enabling seamless data management across distributed teams. Features real-time collaboration, advanced security protocols, and scalable infrastructure designed for high-performance business operations.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">AWS</span>
+                                <span class="tech-tag">MongoDB</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-header">📊</div>
+                        <div class="project-content">
+                            <h3 class="project-title">Analytics Dashboard</h3>
+                            <p class="project-description">
+                                Comprehensive analytics platform providing real-time business intelligence and data visualization. Integrates multiple data sources to deliver actionable insights through intuitive dashboards and automated reporting systems.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Django</span>
+                                <span class="tech-tag">PostgreSQL</span>
+                                <span class="tech-tag">Redis</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: contact@teamx.com</p>
+                    <p>Phone: +1 (555) 123-4567</p>
+                    <p>Address: San Francisco, CA</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <p>Web Development</p>
+                    <p>Mobile Applications</p>
+                    <p>Cloud Solutions</p>
+                    <p>Data Analytics</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <p><a href="#about">About Us</a></p>
+                    <p><a href="#careers">Careers</a></p>
+                    <p><a href="#blog">Blog</a></p>
+                    <p><a href="#contact">Contact</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 ~ Team X. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const earthSection = document.querySelector(".earth-section");
+        const earth = document.getElementById("earthPNG");
+        const fixedHeader = document.getElementById("fixedHeader");
+        const earthLogo = document.getElementById("earthLogo");
+
+        window.addEventListener("scroll", () => {
+            const scrollY = window.scrollY;
+            
+            // Show/hide fixed header and earth logo
+            if (scrollY > 200) {
+                fixedHeader.classList.add("visible");
+                setTimeout(() => {
+                    earthLogo.classList.add("visible");
+                }, 150); // Slight delay for better visual effect
+            } else {
+                earthLogo.classList.remove("visible");
+                fixedHeader.classList.remove("visible");
+            }
+            
+            // Shrink Earth based on scroll
+            const maxSize = 150; // rem
+            const minSize = 5;  // rem
+            const shrinkPoint = 500; // px of scroll where Earth stops shrinking
+            
+            let newSize = maxSize - (scrollY / shrinkPoint) * (maxSize - minSize);
+            newSize = Math.max(minSize, Math.min(maxSize, newSize)); // clamp
+            
+            earth.style.width = newSize + "rem";
+            earth.style.height = newSize + "rem";
+            
+            // Make earth fade out as it shrinks
+            const opacity = Math.max(0.1, (newSize - minSize) / (maxSize - minSize));
+            earth.style.opacity = opacity;
+        });
+    </script>
+</body>
+</html>
