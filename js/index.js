@@ -65,25 +65,25 @@ const navbarHeight = document.querySelector('.navbar').offsetHeight;
 
 // Smooth scroll & close menu on link click
 document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        const targetSection = document.getElementById(targetId);
+  link.addEventListener('click', function (e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href').substring(1);
+    const targetSection = document.getElementById(targetId);
 
-        if (targetSection) {
-            const sectionTop = targetSection.offsetTop;
-            window.scrollTo({
-                top: sectionTop - navbarHeight,
-                behavior: 'smooth'
-            });
-        }
+    if (targetSection) {
+      const sectionTop = targetSection.offsetTop;
+      window.scrollTo({
+        top: sectionTop - navbarHeight,
+        behavior: 'smooth'
+      });
+    }
 
-        // Close mobile menu after click
-        const navLinks = document.querySelector('.nav-links');
-        if (navLinks.classList.contains('open')) {
-            navLinks.classList.remove('open');
-        }
-    });
+    // Close mobile menu after click
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks.classList.contains('open')) {
+      navLinks.classList.remove('open');
+    }
+  });
 });
 
 // Toggle mobile menu
@@ -91,5 +91,5 @@ const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 
 menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
+  navLinks.classList.toggle('open');
 });
