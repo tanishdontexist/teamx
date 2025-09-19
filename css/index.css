@@ -904,7 +904,6 @@ body .stars4 {
 .nav-links li a {
     text-decoration: none;
     color: #bbbbbb;
-    font-weight: 300;
     font-family: 'Inter', sans-serif;
     transition: color 0.3s ease, transform 0.2s ease;
 }
