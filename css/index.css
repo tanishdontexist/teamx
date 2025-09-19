@@ -306,6 +306,16 @@ body .stars4 {
     }
 }
 
+.left-aligned {
+    margin-top: 150px;
+}
+
+@media (max-width:911px) {
+    .left-aligned {
+        margin-top: 0px;
+    }
+}
+
 /* Realistic Earth continents overlay */
 .earth::before {
     content: '';
@@ -353,19 +363,199 @@ body .stars4 {
 }
 
 .member-card {
+    position: relative;
+    overflow: hidden;
     text-decoration: none;
-    background: #262626;
     border: 1px solid #404040;
     border-radius: 8px;
     padding: 48px 32px;
     text-align: center;
-    transition: all 0.3s ease;
+    color: #ffffff;
+    /* Initial hidden state */
+    opacity: 0;
+    transform: translateY(20px);
+    /* No automatic animation - wait for .visible class */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Only animate when .visible class is added */
+.member-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger the visible animation when class is added */
+.member-card.visible:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.member-card.visible:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.member-card.visible:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+/* Background image + blur */
+.member-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px);
+    z-index: -2;
+}
+
+/* First card */
+.member-card:nth-child(1)::before {
+    background-image: url('/media/logo/tm.jpg');
+}
+
+/* Second card */
+.member-card:nth-child(2)::before {
+    background-image: url('/media/logo/sid.jpg');
+}
+
+/* Third card */
+.member-card:nth-child(3)::before {
+    background-image: url('/media/logo/danish.png');
+}
+
+/* Dark blur overlay for cards 2 and 3 */
+.member-card:nth-child(2),
+.member-card:nth-child(3) {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+}
+
+/* Alternative: If backdrop-filter doesn't work well, use this instead */
+.member-card:nth-child(2)::before,
+.member-card:nth-child(3)::before {
+    filter: blur(10px) brightness(0.6);
 }
 
 .member-card:hover {
-    background: #2d2d2d;
     border-color: #525252;
     transform: translateY(-4px);
+}
+
+/* SHINE SWEEP EFFECT - Only when .sweep class is added */
+.member-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.1) 20%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0.1) 80%,
+            rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-20deg);
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* Initial sweep animation - only when .sweep class is added */
+.member-card.sweep::after {
+    animation: initial-shine-sweep 1.2s ease-out;
+    animation-delay: 0.6s;
+}
+
+/* Hover sweep animation - left to right */
+.member-card:hover::after {
+    animation: shine-sweep-right 0.6s ease-out;
+    animation-delay: 0s;
+    animation-fill-mode: forwards;
+}
+
+/* Unhover sweep animation - right to left */
+.member-card::after {
+    transition: left 0.6s ease-out, opacity 0.6s ease-out;
+}
+
+/* When hovering, completely disable the initial animation */
+.member-card.sweep:hover::after {
+    animation: shine-sweep-right 0.6s ease-out;
+    animation-delay: 0s;
+    animation-fill-mode: forwards;
+}
+
+/* On unhover, animate back */
+.member-card:not(:hover)::after {
+    animation: shine-sweep-left 0.6s ease-out;
+}
+
+@keyframes initial-shine-sweep {
+
+    0%,
+    50% {
+        left: -100%;
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
+}
+
+/* Left to right sweep (on hover) */
+@keyframes shine-sweep-right {
+    0% {
+        left: -100%;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
+}
+
+/* Right to left sweep (on unhover) */
+@keyframes shine-sweep-left {
+    0% {
+        left: 100%;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        left: -100%;
+        opacity: 0;
+    }
 }
 
 .member-avatar {
@@ -419,18 +609,155 @@ body .stars4 {
 }
 
 .project-card {
+    position: relative;
     text-decoration: none;
-    background: #262626;
     border: 1px solid #404040;
     border-radius: 8px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    color: #ffffff;
+
+    /* Initial hidden state for fade + slide effect */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
+/* Animate when .visible is added */
+.project-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger animation if multiple cards */
+.project-card.visible:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.project-card.visible:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+/* Background image + blur + optional overlay */
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-position: center;
+    background-size: cover;
+    filter: blur(10px);
+
+    /* First card background */
+    background-image: url('/media/dashboard/insight.png');
+}
+
+/* Second card: image + dark overlay */
+.project-card:nth-child(1)::before {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('/media/dashboard/axora.png');
+}
+
+/* Hover effects */
 .project-card:hover {
-    background: #2d2d2d;
+    background: transparent;
     border-color: #525252;
     transform: translateY(-4px);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+/* SHINE SWEEP EFFECT */
+.project-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.1) 20%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0.1) 80%,
+            rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-20deg);
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* Optional initial sweep */
+.project-card.sweep::after {
+    animation: initial-shine-sweep 1.2s ease-out;
+    animation-delay: 0.6s;
+}
+
+/* Hover sweep */
+.project-card:hover::after {
+    animation: shine-sweep-right 0.6s ease-out;
+    animation-fill-mode: forwards;
+}
+
+/* Unhover sweep */
+.project-card:not(:hover)::after {
+    animation: shine-sweep-left 0.6s ease-out;
+}
+
+/* Keyframes */
+@keyframes initial-shine-sweep {
+
+    0%,
+    50% {
+        left: -100%;
+        opacity: 0;
+    }
+
+    60%,
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
+}
+
+@keyframes shine-sweep-right {
+    0% {
+        left: -100%;
+        opacity: 0;
+    }
+
+    10%,
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
+}
+
+@keyframes shine-sweep-left {
+    0% {
+        left: 100%;
+        opacity: 0;
+    }
+
+    10%,
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        left: -100%;
+        opacity: 0;
+    }
 }
 
 .project-header {
@@ -481,7 +808,8 @@ body .stars4 {
 }
 
 .tech-tag {
-    background: #404040;
+    backdrop-filter: blur(10px);
+    border: 1px solid #404040;
     color: #ffffff;
     padding: 6px 16px;
     border-radius: 4px;
@@ -615,13 +943,16 @@ body .stars4 {
     }
 
     .nav-links li {
-        margin: 15px 0;
         width: auto;
         margin-left: 20px;
     }
 
     .nav-links.open {
         left: 0;
+    }
+
+    .nav-links li a {
+        font-family: 'Space Mono', monospace !important;
     }
 
     .menu-toggle {
@@ -675,3 +1006,196 @@ html {
     color: white !important;
 }
 */
+
+.navbar-container {
+    position: relative;
+    z-index: -1;
+    /* start behind */
+    opacity: 0;
+    transform: translateY(-25px);
+    /* start slightly below */
+    transition: opacity 1s ease, transform 1s ease, z-index 0.5s ease;
+}
+
+.navbar-container.active {
+    opacity: 1;
+    transform: translateY(0);
+    /* move to original position */
+    z-index: 1;
+    /* bring it forward */
+}
+
+/* Initial styles for the section */
+#earth-section {
+    position: relative;
+    z-index: -1;
+    /* start behind */
+    opacity: 0;
+    transform: translateY(-50px);
+    /* start slightly below */
+    transition: opacity 1s ease, transform 1s ease, z-index 0.5s ease;
+}
+
+/* Active class to trigger the animation */
+#earth-section.active {
+    opacity: 1;
+    transform: translateY(0);
+    /* move to original position */
+    z-index: 1;
+    /* bring it forward */
+}
+
+.hawa {
+    z-index: 1000000;
+    transition: all 1s ease-in-out;
+    transform: translateY(-1500px) !important;
+}
+
+.hawa.visible {
+    z-index: 0;
+    transform: translateY(0px) !important;
+}
+
+/* Optional: smooth fade-in when scrolling into view */
+.linebreak {
+    display: none;
+}
+
+@media (max-width:991px) {
+    .linebreak {
+        border: #ffffff 1px solid;
+        display: block;
+    }
+
+    .linebreakk {
+        margin-top: 100px;
+    }
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.form-container {
+    opacity: 0;
+    transform: translateY(20px);
+    display: flex;
+    justify-content: center;
+    padding: 3rem;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.form-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 60%;
+    font-family: Arial, sans-serif;
+}
+
+.tile-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* Tiles */
+.tile {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    background-color: #1a1a1a;
+    border: 2px solid #404040;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.tile:hover {
+    transform: translateY(-3px);
+    border-color: #525252;
+}
+
+/* Labels + Inputs */
+.tile label {
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #ccc;
+}
+
+.tile input,
+.tile textarea {
+    font-family: 'Inter', sans-serif;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #404040;
+    border-radius: 4px;
+    background-color: #121212;
+    color: #fff;
+    resize: none;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.tile input:focus,
+.tile textarea:focus {
+    outline: none;
+    border-color: #525252;
+    background-color: #1e1e1e;
+}
+
+/* Button animation */
+.tile-form button {
+    font-family: 'Space Mono', monospace;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+    background-color: #404040;
+    border: 2px solid #404040;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    align-self: flex-end; /* right on desktop */
+    opacity: 0; /* start hidden */
+    transform: translateY(15px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* When container is visible → fade button in */
+.form-container.visible .tile-form button {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tile-form button:hover {
+    background-color: #525252;
+    border-color: #525252;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .tile-form {
+        width: 100%;
+    }
+
+    .tile-row {
+        flex-direction: column;
+    }
+
+    .tile-form button {
+        align-self: center; /* center on mobile */
+        margin-top: 1rem;
+    }
+}

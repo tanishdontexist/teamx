@@ -28,13 +28,14 @@
 
     <!-- Navbar -->
     <nav class="navbar fixed-top" id="navbar">
-        <div class="navbar-container">
+        <div class="navbar-container" id="navbarLink">
             <div class="logo">TEAM X</div>
             <ul class="nav-links">
                 <li><a class="nav-link active" href="#earth-section">Home</a></li>
                 <li><a class="nav-link" href="#info-section">Information</a></li>
                 <li><a class="nav-link" href="#team-section">Team</a></li>
                 <li><a class="nav-link" href="#projects-section">Projects</a></li>
+                <li><a class="nav-link" href="#getintouch-section">Contact</a></li>
             </ul>
             <div class="menu-toggle" id="menu-toggle">&#9776;</div>
         </div>
@@ -55,11 +56,13 @@
             </div>
         </header>
     </section>
-
+    <hr class="linebreak">
     <!-- Earth Section -->
     <section class="earth-section" id="info-section">
         <div class=" earth-container">
-            <div class="earth right-aligned" id="earthPNG"></div>
+            <div class="hawa" id="hawa">
+                <div class="earth right-aligned" id="earthPNG"></div>
+            </div>
             <div class="hidden-default left-aligned" id="UnHIDE">
                 <h1 class="newfont">TEAM X</h1>
                 <p class="bio bio-width">
@@ -76,21 +79,18 @@
             </div>
         </div>
     </section>
-    <!-- Vertical Cylinder with Moving Dot -->
-    <div class="cylinder">
-        <div class="dot"></div>
-    </div>
+    <hr class="linebreak linebreakk">
     <!-- Main Content -->
     <div class="main-content">
         <div class="container">
             <!-- Team Section -->
             <section class="section margin-topppp" id="team-section">
-                <h2 class="section-title">OUR TEAM</h2>
+                <h2 class="section-title fade-in">OUR TEAM</h2>
                 <div class="team-grid">
                     <a class="member-card" href="https://tanishmehta.com">
                         <div class="member-avatar"><img src="media/logo/tm.jpg"></div>
                         <h3 class="member-name">Tanish Mehta</h3>
-                        <p class="member-role">Senior Developer</p>
+                        <p class="member-role">Full-Stack Developer</p>
                         <p class="member-bio">Full-stack engineer with extensive experience in scalable web applications
                             and system architecture. Specializes in modern frameworks and cloud technologies for
                             enterprise solutions.</p>
@@ -99,7 +99,7 @@
                     <a class="member-card" href="https://sidahire.xyz">
                         <div class="member-avatar"><img src="media/logo/sid.jpg"></div>
                         <h3 class="member-name">Sid Ahire</h3>
-                        <p class="member-role">Lead Designer</p>
+                        <p class="member-role">Full-Stack Developer</p>
                         <p class="member-bio">Product designer focused on user experience and interface design. Creates
                             intuitive digital experiences that drive engagement and business growth through thoughtful
                             design systems.</p>
@@ -118,7 +118,7 @@
 
             <!-- Projects Section -->
             <section class="section margin-topp" id="projects-section">
-                <h2 class="section-title">FEATURED PROJECTS</h2>
+                <h2 class="section-title fade-in">FEATURED PROJECTS</h2>
                 <div class="projects-grid">
                     <a class="project-card" href="https://axora.tanishmehta.com">
                         <div class="project-header"><img src="media/dashboard/axora.png"></div>
@@ -162,7 +162,35 @@
             </section>
         </div>
     </div>
+    <section id="getintouch-section">
+        <h2 class="section-title margin-topp fade-in">GET IN TOUCH</h2>
+        <div class="form-container">
+            <form class="tile-form" action="https://formspree.io/f/mdoqqdqp" method="POST">
+                <div class="tile-row">
+                    <div class="tile fade-in">
+                        <label for="name">User Name</label>
+                        <input type="text" id="name" placeholder="Enter your name" required>
+                    </div>
 
+                    <div class="tile fade-in">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                    </div>
+                </div>
+                <div class="tile fade-in">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" placeholder="Enter your subject" required>
+                </div>
+                <div class="tile fade-in">
+                    <label for="description">Description</label>
+                    <textarea id="description" placeholder="Write your description" required></textarea>
+                </div>
+
+                <button type="submit" class="fade-in title-button">Submit</button>
+            </form>
+        </div>
+
+    </section>
     <!-- Footer -->
     <footer class="footer" id="contact-section">
         <div class="container">
